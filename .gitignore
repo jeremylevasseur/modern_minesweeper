@@ -1,12 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-modern-minesweeper/node_modules
-modern-minesweeper/.pnp
+node_modules
+/.pnp
 .pnp.js
 
 # testing
-modern-minesweeper/coverage
+coverage
 
 # production
 modern-minesweeper/build
