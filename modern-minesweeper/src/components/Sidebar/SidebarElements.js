@@ -18,7 +18,7 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const CloseIcon = styled(FaTimes)`
-    color: #fff;
+    color: #85c3cf;
 `;
 
 export const Icon = styled.div`
@@ -71,7 +71,7 @@ export const SideBtnWrap = styled.div`
 
 export const SidebarRoute = styled(LinkRouter)`
     border-radius: 50px;
-    background: #01bf71;
+    background: #85c3cf;
     white-space: nowrap;
     padding: 16px 64px;
     color: #010606;

@@ -4,7 +4,7 @@ import Sidebar from '../../components/Sidebar';
 import HeroSection from '../../components/HeroSection';
 import Footer from '../../components/Footer';
 
-const Play = () => {
+const SignIn = () => {
     return (
         <>
             <Navbar />
@@ -13,4 +13,4 @@ const Play = () => {
     )
 }
 
-export default Play
+export default SignIn

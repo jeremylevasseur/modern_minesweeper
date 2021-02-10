@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { Link as LinkScroll } from 'react-scroll'
+import { Link as LinkRouter } from 'react-router-dom'
 
-export const Button = styled(LinkScroll)`
+export const Button = styled(LinkRouter)`
     border-radius: 50px;
-    background: ${({ primary }) => (primary ? '#01BF71' : '#010606')};
+    background: ${({ primary }) => (primary ? '#34acbc' : '#212121')};
     white-space: nowrap;
     padding: ${({ big }) => (big ? '14px 48px' : '12px 30px')};
     color: ${({ dark }) => (dark ? '#010606' : '#fff')};

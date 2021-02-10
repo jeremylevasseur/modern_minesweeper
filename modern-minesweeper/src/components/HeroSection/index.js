@@ -27,12 +27,9 @@ const HeroSection = () => {
             </HeroBg>
             <HeroContent>
                 <HeroH1>Modern Minesweeper</HeroH1>
-                <HeroP>
-                    Sign up for a new account today and recieve $250 in credit towards your next payment.
-                </HeroP>
                 <HeroBtnWrapper>
                     <Button
-                        to="signup"
+                        to="play"
                         onMouseEnter={onHover}
                         onMouseLeave={onHover}
                         primary="true"
