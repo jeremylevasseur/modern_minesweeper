@@ -37,7 +37,7 @@ while numberOfMinesSet < numberOfMines:
 
         if (grid[i]['row'] == randomRow + 1) and (grid[i]['column'] == randomColumn + 1):
 
-            # Making sure there is already a mine here
+            # Making sure there is not already a mine here
             if grid[i]['isMine']:
                 break
             else:
