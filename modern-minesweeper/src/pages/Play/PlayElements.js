@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MdKeyboardArrowRight, MdArrowForward } from 'react-icons/md'
 
 export const GameSection = styled.div`
     display: flex;
@@ -28,4 +29,36 @@ export const MinesweeperBoard = styled.div`
     padding-right: 1%;
     padding-top: 1%;
     padding-bottom: 1%;
+`;
+
+export const NewGameButton = styled.div`
+    margin-bottom: 50px;
+    border-radius: 50px;
+    background: ${({ primary }) => (primary ? '#34acbc' : '#212121')};
+    white-space: nowrap;
+    padding: 14px 48px;
+    color: ${({ dark }) => (dark ? '#010606' : '#fff')};
+    font-size: ${({ fontBig }) => (fontBig ? '20px' : '16px')};
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: ${({ primary }) => (primary ? '#fff' : '#01BF71')};
+    }
+`;
+
+export const ArrowForward = styled(MdArrowForward)`
+    margin-left: 8px;
+    font-size: 20px;
+`;
+
+export const ArrowRight = styled(MdKeyboardArrowRight)`
+    margin-left: 8px;
+    font-size: 20px;
 `;

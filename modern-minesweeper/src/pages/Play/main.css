@@ -16,25 +16,18 @@
     transition: all 0.1s ease-in-out;
 }
 
-.gridItem #one {
-    /* background-color: #7a7d84; */
-    background-color: red;
-    margin: 1px;
-    border-radius: 2px;
-    width: 30px;
-    height: 30px;
-    transition: all 0.1s ease-in-out;
-}
-
 .gridItem:hover {
-    background-color: #a8aaaf;
+    background-color: #707072;
     transition: all 0.1s ease-in-out;
 }
 
-.isWall {
-    background-color: black;
-}
 
-.isRobot {
+.zero {
     background-color: red;
 }
+
+
+.isMine {
+    background-color: green;
+}
+

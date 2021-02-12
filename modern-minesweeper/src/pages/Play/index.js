@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import './main.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import {
     GameSection,
     GameWrapper,
-    MinesweeperBoard
+    MinesweeperBoard,
+    NewGameButton,
+    ArrowForward,
+    ArrowRight
 } from './PlayElements';
 
 const Play = () => {
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
     const [rows, setRows] = useState(16);
     const [columns, setColumns] = useState(30);
     const [numberOfMines, setNumberOfMines] = useState(90);
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
-        setGrid([]);
 
         // ------------ Setting Up Empty Grid ------------- //
 
@@ -28,8 +31,19 @@ const Play = () => {
                 let tempElement = {
                     'row': i + 1,
                     'column': j + 1,
+                    'clicked': false,
                     'isMine': false,
-                    'cellNumber': 0
+                    'isMineClicked': true,
+                    'cellNumber': 0,
+                    'cellNumberZero': false,
+                    'cellNumberOne': false,
+                    'cellNumberTwo': false,
+                    'cellNumberThree': false,
+                    'cellNumberFour': false,
+                    'cellNumberFive': false,
+                    'cellNumberSix': false,
+                    'cellNumberSeven': false,
+                    'cellNumberEight': false,
                 }
 
                 placeholderGrid.push(tempElement);
@@ -105,19 +119,42 @@ const Play = () => {
         }
 
         setGrid(placeholderGrid);
-        // console.log(grid);
 
     }, []);
+
+    const newGame = () => {
+        console.log("New Game");
+    }
 
     const handleCellClick = (e) => {
         const clickedRow = parseInt(e.split('-')[0]);
         const clickedColumn = parseInt(e.split('-')[1]);
-        
-        for (let i = 0; i < grid.length; i++) {
-            if ( (grid[i]['row'] == clickedRow) && (grid[i]['column'] == clickedColumn) ) {
-                console.log(grid[i]);
+
+        var tempGrid = grid;
+
+        for (let i = 0; i < tempGrid.length; i++) {
+            if ( (tempGrid[i]['row'] == clickedRow) && (tempGrid[i]['column'] == clickedColumn) ) {
+                let cellNumber = tempGrid[i]['cellNumber'];
+                tempGrid[i]['clicked'] = true;
+
+                if (cellNumber === 0) {
+                    tempGrid[i]['cellNumberZero'] = true;
+                } else if (cellNumber === 1) {
+                    tempGrid[i]['cellNumberZero'] = true;
+                } else if (cellNumber === 2) {
+                    tempGrid[i]['cellNumberZero'] = true;
+                } else if (cellNumber === 3) {
+                    tempGrid[i]['cellNumberZero'] = true;
+                } else if (cellNumber === 4) {
+                    tempGrid[i]['cellNumberZero'] = true;
+                }
+
+                break;
             }
         }
+
+        setGrid(tempGrid);
+        forceUpdate();
         
     }
 
@@ -125,11 +162,27 @@ const Play = () => {
         return <div
                 key={grid.row.toString() + '-' + grid.column.toString()}
                 className={
-                    grid.isMine ? 'gridItem isMine' : 'gridItem'
+                    grid.isMine ? 'gridItem isMine'
+                    : grid.cellNumberZero ? 'gridItem zero'
+                    : grid.cellNumberOne ? 'gridItem one'
+                    : grid.cellNumberTwo ? 'gridItem two'
+                    : grid.cellNumberThree ? 'gridItem three'
+                    : grid.cellNumberFour ? 'gridItem four'
+                    : grid.cellNumberFive ? 'gridItem five'
+                    : grid.cellNumberSix ? 'gridItem six'
+                    : grid.cellNumberSeven ? 'gridItem seven'
+                    : grid.cellNumberEight ? 'gridItem eight'
+                    : 'gridItem'
                 }
                 onClick={() => handleCellClick(grid.row.toString() + '-' + grid.column.toString())}
             ></div>
     });
+
+    const [hover, setHover] = useState(false);
+
+    const onHover = () => {
+        setHover(!hover);
+    }
 
     return (
         <>
@@ -140,6 +193,21 @@ const Play = () => {
                         <div className="grid">{gridItems}</div>
                     </MinesweeperBoard>
                 </GameWrapper>
+                <NewGameButton
+                    to="newgame"
+                    onMouseEnter={onHover}
+                    onMouseLeave={onHover}
+                    onClick={newGame}
+                    primary="true"
+                    dark="true"
+                    smooth={true}
+                    duration={500}
+                    spy={true}
+                    exact='true'
+                    offset={-80}
+                >
+                    New Game {hover ? <ArrowForward /> : <ArrowRight />}   
+                </NewGameButton>
             </GameSection>
             <Footer />
         </>
