@@ -92,9 +92,9 @@ const Play = () => {
             // Need to count the number of mines in it's surrounding 8 cells
             let numberOfSurroundingMines = 0;
 
-            for (let j = -1; j < 2; j++) {
+            for (let j = -2; j < 1; j++) {
 
-                for (let k = -1; k < 2; k++) {
+                for (let k = -2; k < 1; k++) {
 
                     // Avoiding index out of bounds error
                     if ( ( (currentRow + j) in minesGrid ) && ( (currentColumn + k) in minesGrid[currentRow + j] ) ) {
