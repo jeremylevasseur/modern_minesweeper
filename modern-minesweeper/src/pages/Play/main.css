@@ -16,13 +16,25 @@
     transition: all 0.1s ease-in-out;
 }
 
-.gridItem:hover {
+/* .gridItem:hover {
+    background-color: #707072;
+    transition: all 0.1s ease-in-out;
+} */
+
+.hover:hover {
     background-color: #707072;
     transition: all 0.1s ease-in-out;
 }
 
 .isMineClicked {
     background-color: #FFFFFF;
+}
+
+.isFlagged {
+    background-image: url("../../images/flag.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .zero {
