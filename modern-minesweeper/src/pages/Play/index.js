@@ -33,7 +33,7 @@ const Play = () => {
                     'column': j + 1,
                     'clicked': false,
                     'isMine': false,
-                    'isMineClicked': true,
+                    'isMineClicked': false,
                     'cellNumber': 0,
                     'cellNumberZero': false,
                     'cellNumberOne': false,
@@ -127,33 +127,46 @@ const Play = () => {
     }
 
     const handleCellClick = (e) => {
-        const clickedRow = parseInt(e.split('-')[0]);
-        const clickedColumn = parseInt(e.split('-')[1]);
 
-        var tempGrid = grid;
+        if (e.type === 'click') {
+            const clickedRow = parseInt(e.split('-')[0]);
+            const clickedColumn = parseInt(e.split('-')[1]);
 
-        for (let i = 0; i < tempGrid.length; i++) {
-            if ( (tempGrid[i]['row'] == clickedRow) && (tempGrid[i]['column'] == clickedColumn) ) {
-                let cellNumber = tempGrid[i]['cellNumber'];
-                tempGrid[i]['clicked'] = true;
+            var tempGrid = grid;
 
-                if (cellNumber === 0) {
-                    tempGrid[i]['cellNumberZero'] = true;
-                } else if (cellNumber === 1) {
-                    tempGrid[i]['cellNumberZero'] = true;
-                } else if (cellNumber === 2) {
-                    tempGrid[i]['cellNumberZero'] = true;
-                } else if (cellNumber === 3) {
-                    tempGrid[i]['cellNumberZero'] = true;
-                } else if (cellNumber === 4) {
-                    tempGrid[i]['cellNumberZero'] = true;
+            for (let i = 0; i < tempGrid.length; i++) {
+                if ( (tempGrid[i]['row'] == clickedRow) && (tempGrid[i]['column'] == clickedColumn) ) {
+                    let cellNumber = tempGrid[i]['cellNumber'];
+                    tempGrid[i]['clicked'] = true;
+
+                    if (cellNumber === 0) {
+                        tempGrid[i]['cellNumberZero'] = true;
+                    } else if (cellNumber === 1) {
+                        tempGrid[i]['cellNumberOne'] = true;
+                    } else if (cellNumber === 2) {
+                        tempGrid[i]['cellNumberTwo'] = true;
+                    } else if (cellNumber === 3) {
+                        tempGrid[i]['cellNumberThree'] = true;
+                    } else if (cellNumber === 4) {
+                        tempGrid[i]['cellNumberFour'] = true;
+                    } else if (cellNumber === 5) {
+                        tempGrid[i]['cellNumberFive'] = true;
+                    } else if (cellNumber === 6) {
+                        tempGrid[i]['cellNumberSix'] = true;
+                    } else if (cellNumber === 7) {
+                        tempGrid[i]['cellNumberSeven'] = true;
+                    } else if (cellNumber === 8) {
+                        tempGrid[i]['cellNumberEight'] = true;
+                    }
+
+                    break;
                 }
-
-                break;
             }
-        }
 
-        setGrid(tempGrid);
+            setGrid(tempGrid);
+        } else if (e.type === 'contextmenu') {
+            console.log("Right click");
+        }
         forceUpdate();
         
     }
@@ -162,7 +175,7 @@ const Play = () => {
         return <div
                 key={grid.row.toString() + '-' + grid.column.toString()}
                 className={
-                    grid.isMine ? 'gridItem isMine'
+                    grid.isMineClicked ? 'gridItem isMineClicked'
                     : grid.cellNumberZero ? 'gridItem zero'
                     : grid.cellNumberOne ? 'gridItem one'
                     : grid.cellNumberTwo ? 'gridItem two'
@@ -175,6 +188,7 @@ const Play = () => {
                     : 'gridItem'
                 }
                 onClick={() => handleCellClick(grid.row.toString() + '-' + grid.column.toString())}
+                onContextMenu={() => handleCellClick(grid.row.toString() + '-' + grid.column.toString())}
             ></div>
     });
 

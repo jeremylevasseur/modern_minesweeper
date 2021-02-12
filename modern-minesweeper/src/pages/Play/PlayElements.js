@@ -12,7 +12,7 @@ export const GameSection = styled.div`
 
 export const GameWrapper = styled.div`
     background: #065464;
-    width: 1000px;
+    width: 1375px;
     border-radius: 10px;
     margin-top: 50px;
     margin-bottom: 50px;

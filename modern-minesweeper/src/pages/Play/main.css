@@ -11,8 +11,8 @@
     background-color: #212121;
     margin: 1px;
     border-radius: 2px;
-    width: 30px;
-    height: 30px;
+    width: 42px;
+    height: 42px;
     transition: all 0.1s ease-in-out;
 }
 
@@ -21,13 +21,100 @@
     transition: all 0.1s ease-in-out;
 }
 
+.isMineClicked {
+    background-color: #FFFFFF;
+}
 
 .zero {
-    background-color: red;
+    background-color: #85c3cf;
+    color: #000;
+    background-image: url("../../images/mine.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.one {
+    background-color: #8FB289;
+    color: #000;
+    background-image: url("../../images/1.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.two {
+    background-color: #FFF38C;
+    color: #000;
+    background-image: url("../../images/2.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.three {
+    background-color: #F87B74;
+    color: #000;
+    background-image: url("../../images/3.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.four {
+    background-color: #F55047;
+    color: #000;
+    background-image: url("../../images/4.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.five {
+    background-color: #E4170C;
+    color: #000;
+    background-image: url("../../images/5.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.six {
+    background-color: #A51009;
+    color: #fff;
+    background-image: url("../../images/6.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.seven {
+    background-color: #5C0905;
+    color: #fff;
+    background-image: url("../../images/7.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
+}
+
+.eight {
+    background-color: #0A0101;
+    color: #fff;
+    background-image: url("../../images/8.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 2px solid #000;
 }
 
 
-.isMine {
-    background-color: green;
-}
+
 
