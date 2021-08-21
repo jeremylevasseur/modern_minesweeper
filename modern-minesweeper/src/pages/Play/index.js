@@ -23,38 +23,25 @@ const Play = () => {
         // ------------ Setting Up Empty Grid ------------- //
 
         const placeholderGrid = [];  // Will be used to change state variable
-        const minesGrid = [];  // Will be used for efficiency reasons
         for (let i = 0; i < rows; i++) {
+
+            placeholderGrid[i] = [];
 
             for (let j = 0; j < columns; j++) {
 
-                let tempElement = {
-                    'row': i + 1,
-                    'column': j + 1,
+                placeholderGrid[i][j] = {
+                    'row': i,
+                    'column': j,
                     'clicked': false,
                     'isMine': false,
                     'isMineClicked': false,
                     'isFlagged': false,
-                    'cellNumber': 0,
-                    'cellNumberZero': false,
-                    'cellNumberOne': false,
-                    'cellNumberTwo': false,
-                    'cellNumberThree': false,
-                    'cellNumberFour': false,
-                    'cellNumberFive': false,
-                    'cellNumberSix': false,
-                    'cellNumberSeven': false,
-                    'cellNumberEight': false,
+                    'cellNumber': 0
                 }
 
-                placeholderGrid.push(tempElement);
-                
             }
 
-            minesGrid.push(new Array(columns).fill(0));
-
         }
-
 
         // ------------ Adding Mines To Grid ------------- //
         let numberOfMinesSet = 0;
@@ -63,59 +50,55 @@ const Play = () => {
             let randomRow = Math.floor(Math.random() * rows);
             let randomColumn = Math.floor(Math.random() * columns);
 
-            for (let i = 0; i < placeholderGrid.length; i++) {
+            let randomCell = placeholderGrid[randomRow][randomColumn];
 
-                if ( (placeholderGrid[i]['row'] == randomRow + 1) && (placeholderGrid[i]['column'] == randomColumn + 1) ) {
-
-                    // Making sure there is not already a mine here
-                    if (placeholderGrid[i]['isMine']) {
-                        break;
-                    } else {
-                        placeholderGrid[i]['isMine'] = true;
-                        minesGrid[randomRow][randomColumn] = 1;
-                        numberOfMinesSet += 1;
-                    }
-
-                }
-
+            if (randomCell['isMine'] === false) {
+                placeholderGrid[randomRow][randomColumn]['isMine'] = true;
+                numberOfMinesSet += 1;
             }
 
         }
 
+
         // ------------ Now Setting The Cell Number For Each Cell ------------- //
+        for (var i = 0; i < placeholderGrid.length; i++) {
 
-        for (let i = 0; i < placeholderGrid.length; i++) {
+            for (var j = 0; j < placeholderGrid[i].length; j++) {
 
-            let currentRow = placeholderGrid[i]['row'];
-            let currentColumn = placeholderGrid[i]['column'];
+                var numberOfSurroundingMines = 0;
+                var isMine = placeholderGrid[i][j]['isMine'];
 
-            // Need to count the number of mines in it's surrounding 8 cells
-            let numberOfSurroundingMines = 0;
+                if (!isMine) {
 
-            for (let j = -2; j < 1; j++) {
+                    // Must check all cells surrounding this cell to count mines
 
-                for (let k = -2; k < 1; k++) {
+                    var searchingIndices = [
+                        [i - 1, j - 1],
+                        [i - 1, j],
+                        [i - 1, j + 1],
+                        [i, j - 1],
+                        [i, j + 1],
+                        [i + 1, j - 1],
+                        [i + 1, j],
+                        [i + 1, j + 1]
+                    ];
 
-                    // Avoiding index out of bounds error
-                    if ( ( (currentRow + j) in minesGrid ) && ( (currentColumn + k) in minesGrid[currentRow + j] ) ) {
-                        
-                        if (minesGrid[currentRow + j][currentColumn + k]) {
-
-                            numberOfSurroundingMines += 1;
-
-                        } else {
-
+                    for (var k = 0; k < searchingIndices.length; k++) {
+                        try {
+                            if (placeholderGrid[searchingIndices[k][0]][searchingIndices[k][1]]['isMine'] === true) {
+                                numberOfSurroundingMines += 1;
+                            }
+                        } catch(err) {
                             continue;
-
                         }
-
                     }
+
+                    placeholderGrid[i][j]['cellNumber'] = numberOfSurroundingMines;
 
                 }
 
-            }
 
-            placeholderGrid[i]['cellNumber'] = numberOfSurroundingMines;
+            }
 
         }
 
@@ -133,33 +116,13 @@ const Play = () => {
 
         var tempGrid = grid;
 
-        for (let i = 0; i < tempGrid.length; i++) {
-            if ( (tempGrid[i]['row'] == clickedRow) && (tempGrid[i]['column'] == clickedColumn) ) {
-                let cellNumber = tempGrid[i]['cellNumber'];
-                tempGrid[i]['clicked'] = true;
+        var isMine = tempGrid[clickedRow][clickedColumn]['isMine'];
 
-                if (cellNumber === 0) {
-                    tempGrid[i]['cellNumberZero'] = true;
-                } else if (cellNumber === 1) {
-                    tempGrid[i]['cellNumberOne'] = true;
-                } else if (cellNumber === 2) {
-                    tempGrid[i]['cellNumberTwo'] = true;
-                } else if (cellNumber === 3) {
-                    tempGrid[i]['cellNumberThree'] = true;
-                } else if (cellNumber === 4) {
-                    tempGrid[i]['cellNumberFour'] = true;
-                } else if (cellNumber === 5) {
-                    tempGrid[i]['cellNumberFive'] = true;
-                } else if (cellNumber === 6) {
-                    tempGrid[i]['cellNumberSix'] = true;
-                } else if (cellNumber === 7) {
-                    tempGrid[i]['cellNumberSeven'] = true;
-                } else if (cellNumber === 8) {
-                    tempGrid[i]['cellNumberEight'] = true;
-                }
-
-                break;
-            }
+        if (isMine) {
+            tempGrid[clickedRow][clickedColumn]['clicked'] = true;
+            tempGrid[clickedRow][clickedColumn]['isMineClicked'] = true;
+        } else {
+            tempGrid[clickedRow][clickedColumn]['clicked'] = true;
         }
 
         setGrid(tempGrid);
@@ -174,48 +137,48 @@ const Play = () => {
 
         var tempGrid = grid;
 
-        for (let i = 0; i < tempGrid.length; i++) {
-            if ( (tempGrid[i]['row'] == clickedRow) && (tempGrid[i]['column'] == clickedColumn) ) {
-                let oldIsFlagged = tempGrid[i]['isFlagged'];
+        var oldIsFlagged = grid[clickedRow][clickedColumn]['isFlagged'];
 
-                if (oldIsFlagged) {
-                    tempGrid[i]['isFlagged'] = false;
-                } else {
-                    tempGrid[i]['isFlagged'] = true;
-                }
-
-                break;
-            }
+        if (oldIsFlagged) {
+            tempGrid[clickedRow][clickedColumn]['isFlagged'] = false;
+        } else {
+            tempGrid[clickedRow][clickedColumn]['isFlagged'] = true;
         }
 
         setGrid(tempGrid);
         forceUpdate();
     }
 
-    const gridItems = grid.map((grid) => {
-        return <div
-                key={grid.row.toString() + '-' + grid.column.toString()}
-                className={
-                    grid.isMineClicked ? 'gridItem isMineClicked'
-                    : grid.isFlagged ? 'gridItem isFlagged hover'
-                    : grid.cellNumberZero ? 'gridItem zero'
-                    : grid.cellNumberOne ? 'gridItem one'
-                    : grid.cellNumberTwo ? 'gridItem two'
-                    : grid.cellNumberThree ? 'gridItem three'
-                    : grid.cellNumberFour ? 'gridItem four'
-                    : grid.cellNumberFive ? 'gridItem five'
-                    : grid.cellNumberSix ? 'gridItem six'
-                    : grid.cellNumberSeven ? 'gridItem seven'
-                    : grid.cellNumberEight ? 'gridItem eight'
-                    : 'gridItem hover'
-                }
-                onClick={() => handleCellClick(grid.row.toString() + '-' + grid.column.toString())}
-                onContextMenu={(e) => {
-                    e.preventDefault();
-                    handleRightClick(grid.row.toString() + '-' + grid.column.toString())
-                }}
-            ></div>
+    const gridItems = grid.map((rowCells, rowIndex) => {
+        grid[index].map((cell, columnIndex) => {
+            
+        });
     });
+
+    // const gridItems = grid.map((grid) => {
+    //     return <div
+    //             key={grid.row.toString() + '-' + grid.column.toString()}
+    //             className={
+    //                 grid.isMineClicked ? 'gridItem isMineClicked'
+    //                 : grid.isFlagged ? 'gridItem isFlagged hover'
+    //                 : grid.cellNumber === 0 ? 'gridItem zero'
+    //                 : grid.cellNumber === 1 ? 'gridItem one'
+    //                 : grid.cellNumber === 2 ? 'gridItem two'
+    //                 : grid.cellNumber === 3 ? 'gridItem three'
+    //                 : grid.cellNumber === 4 ? 'gridItem four'
+    //                 : grid.cellNumber === 5 ? 'gridItem five'
+    //                 : grid.cellNumber === 6 ? 'gridItem six'
+    //                 : grid.cellNumber === 7 ? 'gridItem seven'
+    //                 : grid.cellNumber === 8 ? 'gridItem eight'
+    //                 : 'gridItem hover'
+    //             }
+    //             onClick={() => handleCellClick(grid.row.toString() + '-' + grid.column.toString())}
+    //             onContextMenu={(e) => {
+    //                 e.preventDefault();
+    //                 handleRightClick(grid.row.toString() + '-' + grid.column.toString())
+    //             }}
+    //         ></div>
+    // });
 
     const [hover, setHover] = useState(false);
 
@@ -229,7 +192,7 @@ const Play = () => {
             <GameSection>
                 <GameWrapper>
                     <MinesweeperBoard>
-                        <div className="grid">{gridItems}</div>
+                        {/* <div className="grid">{gridItems}</div> */}
                     </MinesweeperBoard>
                 </GameWrapper>
                 <NewGameButton
